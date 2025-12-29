@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-gateway
+  namespace: nginx-gateway
+spec:
+  template:
+    spec:
+      containers:
+        - name: nginx
+          ports:
+            - name: http
+              containerPort: 80
+          args:
+            - "-g"
+            - "daemon off;"
+          # stub_status must be enabled in nginx.conf
+
+        - name: nginx-metrics
+          image: nginx/nginx-prometheus-exporter:1.1.0
+          args:
+            - "-nginx.scrape-uri=http://127.0.0.1/stub_status"
+          ports:
+            - name: metrics
+              containerPort: 9113

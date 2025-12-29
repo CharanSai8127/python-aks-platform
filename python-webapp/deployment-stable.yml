@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-app-stable
+  labels:
+    app: python-app
+    track: stable
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: python-app
+      track: stable
+  template:
+    metadata:
+      labels:
+        app: python-app
+        track: stable
+    spec:
+      containers:
+        - name: python-app
+          image: charansait372/python-aks-platform:v1.4
+          ports:
+            - name: http
+              containerPort: 5000
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-db-secret
+                  key: DATABASE_URL

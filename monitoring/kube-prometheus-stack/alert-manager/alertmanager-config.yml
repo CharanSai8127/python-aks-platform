@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: alertmanager-email-secret
+  namespace: monitoring
+type: Opaque
+stringData:
+  smtp_username: alerts@example.com
+  smtp_password: SUPER_SECRET_PASSWORD

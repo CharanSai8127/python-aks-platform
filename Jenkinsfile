@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         IMAGE_NAME   = "charansait372/python-aks-platform"
-        IMAGE_TAG    = "v1.2"
+        IMAGE_TAG    = "v1.4"
         SCANNER_HOME = tool 'sonar-scanner'
     }
 

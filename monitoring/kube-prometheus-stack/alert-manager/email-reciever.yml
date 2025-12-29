@@ -1,0 +1,38 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: alertmanager-receivers
+  namespace: monitoring
+spec:
+  receivers:
+    - name: email-critical
+      emailConfigs:
+        - to: sre-oncall@example.com
+          from: alerts@example.com
+          smarthost: smtp.gmail.com:587
+          authUsername:
+            name: alertmanager-email-secret
+            key: smtp_username
+          authPassword:
+            name: alertmanager-email-secret
+            key: smtp_password
+          requireTLS: true
+          sendResolved: true
+          headers:
+            subject: "[CRITICAL] {{ .CommonAnnotations.summary }}"
+
+    - name: email-warning
+      emailConfigs:
+        - to: dev-team@example.com
+          from: alerts@example.com
+          smarthost: smtp.gmail.com:587
+          authUsername:
+            name: alertmanager-email-secret
+            key: smtp_username
+          authPassword:
+            name: alertmanager-email-secret
+            key: smtp_password
+          requireTLS: true
+          sendResolved: true
+          headers:
+            subject: "[WARNING] {{ .CommonAnnotations.summary }}"
