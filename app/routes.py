@@ -1,7 +1,26 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, Response
 from .models import db, Item
+from prometheus_client import Counter, generate_latest, CONTENT_TYPE_LATEST
 
 main = Blueprint('main', __name__)
+
+# Prometheus metric
+REQUEST_COUNT = Counter(
+    "http_requests_total",
+    "Total HTTP requests",
+    ["method", "endpoint"]
+)
+
+@main.before_request
+def before_request():
+    REQUEST_COUNT.labels(
+        method=request.method,
+        endpoint=request.path
+    ).inc()
+
+@main.route("/metrics")
+def metrics():
+    return Response(generate_latest(), mimetype=CONTENT_TYPE_LATEST)
 
 @main.route('/')
 def index():

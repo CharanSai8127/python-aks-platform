@@ -1,10 +1,10 @@
 from flask import Flask
 from .models import db
+from config import Config
 
 def create_app():
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://root:root@localhost/my_database'  # Update with your credentials
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config.from_object(Config)
 
     db.init_app(app)
 
@@ -12,7 +12,7 @@ def create_app():
     app.register_blueprint(main)
 
     with app.app_context():
-        db.create_all()  # Create tables if they don't exist
+        db.create_all()
 
     return app
 
