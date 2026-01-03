@@ -33,16 +33,19 @@ spec:
                 secretKeyRef:
                   name: postgres-db-secret
                   key: POSTGRES_PASSWORD
+            # 👇 CRITICAL FIX
             - name: PGDATA
               value: /var/lib/postgresql/data/pgdata
           volumeMounts:
+            # 👇 Mount ONE LEVEL ABOVE PGDATA
             - name: postgres-data
-              mountPath: /var/lib/postgresql/data
+              mountPath: /var/lib/postgresql
   volumeClaimTemplates:
     - metadata:
         name: postgres-data
       spec:
-        accessModes: ["ReadWriteOnce"]
+        accessModes:
+          - ReadWriteOnce
         resources:
           requests:
             storage: 2Gi
