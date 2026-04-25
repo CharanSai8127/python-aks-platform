@@ -1,0 +1,54 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: python-app
+  labels:
+    app: python-app
+spec:
+  replicas: 3
+
+  selector:
+    matchLabels:
+      app: python-app
+
+  template:
+    metadata:
+      labels:
+        app: python-app
+    spec:
+      containers:
+        - name: python-app
+          image: charansait372/python-aks-platform:v1.5   # 👈 CHANGE VERSION HERE
+          command: ["python"]
+          args: ["run.py"]
+          ports:
+            - name: http
+              containerPort: 5000
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-db-secret
+                  key: DATABASE_URL
+
+  strategy:
+    canary:
+      stableService: python-app-stable
+      canaryService: python-app-canary
+
+      steps:
+        - setWeight: 10
+        - pause: { duration: 60 }
+
+        - analysis:
+            templates:
+              - templateName: success-rate-check
+
+        - setWeight: 50
+        - pause: { duration: 120 }
+
+        - analysis:
+            templates:
+              - templateName: success-rate-check
+
+        - setWeight: 100

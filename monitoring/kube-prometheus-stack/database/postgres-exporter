@@ -29,10 +29,10 @@ spec:
             - name: DATA_SOURCE_USER
               valueFrom:
                 secretKeyRef:
-                  name: postgres-secret
+                  name: postgres-db-secret
                   key: POSTGRES_USER
             - name: DATA_SOURCE_PASS
               valueFrom:
                 secretKeyRef:
-                  name: postgres-secret
+                  name: postgres-db-secret
                   key: POSTGRES_PASSWORD

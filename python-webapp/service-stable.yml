@@ -4,12 +4,10 @@ metadata:
   name: python-app-stable
   labels:
     app: python-app
-    track: stable
     component: application
 spec:
   selector:
     app: python-app
-    track: stable
   ports:
     - name: http
       port: 80

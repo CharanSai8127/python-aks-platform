@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: postgres
+  namespace: application
   labels:
     app: postgres
 spec:
@@ -33,11 +34,9 @@ spec:
                 secretKeyRef:
                   name: postgres-db-secret
                   key: POSTGRES_PASSWORD
-            # 👇 CRITICAL FIX
             - name: PGDATA
               value: /var/lib/postgresql/data/pgdata
           volumeMounts:
-            # 👇 Mount ONE LEVEL ABOVE PGDATA
             - name: postgres-data
               mountPath: /var/lib/postgresql
   volumeClaimTemplates:
@@ -49,4 +48,3 @@ spec:
         resources:
           requests:
             storage: 2Gi
-
