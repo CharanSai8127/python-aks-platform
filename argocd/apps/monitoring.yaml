@@ -11,7 +11,7 @@ spec:
   source:
     repoURL: https://github.com/CharanSai8127/python-aks-platform
     targetRevision: main
-    path: monitoring/kube-prometheus-stack
+    path: monitoring/
 
   destination:
     server: https://kubernetes.default.svc
