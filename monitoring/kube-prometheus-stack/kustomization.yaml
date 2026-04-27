@@ -1,4 +1,0 @@
-resources:
-  - application
-  - database
-  - gateway-api

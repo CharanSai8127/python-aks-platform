@@ -1,7 +1,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: nginx-gateway
+  name: gateway
   namespace: monitoring
   labels:
     release: kube-prometheus-stack
@@ -11,8 +11,7 @@ spec:
       - nginx-gateway
   selector:
     matchLabels:
-      component: gateway
+      app: gateway
   endpoints:
-    - port: metrics
+    - port: http
       interval: 30s
-      scrapeTimeout: 10s

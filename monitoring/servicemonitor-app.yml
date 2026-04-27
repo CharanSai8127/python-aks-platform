@@ -12,9 +12,7 @@ spec:
   selector:
     matchLabels:
       app: python-app
-      component: application
   endpoints:
     - port: http
       path: /metrics
       interval: 30s
-      scrapeTimeout: 10s
