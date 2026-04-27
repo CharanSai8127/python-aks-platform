@@ -1,21 +1,21 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: database
+  name: gateway-api
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   project: default
 
   source:
     repoURL: https://github.com/CharanSai8127/python-aks-platform
     targetRevision: main
-    path: database
+    path: gateway-api   # PATH FIX
 
   destination:
     server: https://kubernetes.default.svc
-    namespace: application
+    namespace: nginx-gateway   # PATH FIX
 
   syncPolicy:
     automated:
