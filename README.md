@@ -1,151 +1,295 @@
-<<<<<<< HEAD
-# 3-Tier Python + PostgreSQL Application
+# 🚀 Intelligent Deployment Platform on Kubernetes  
+## Progressive Delivery with Argo Rollouts, Metrics-Driven Decisions, and Automated Rollback  
 
-This project is a 3-tier web application built using Python for the backend, with PostgreSQL as the database. The application consists of a presentation layer, a business logic layer, and a data access layer.
+---
 
-## Table of Contents
+## 🧩 Overview  
 
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-  - [1. Setting Up Python Virtual Environment](#1-setting-up-python-virtual-environment)
-  - [2. Installing PostgreSQL](#2-installing-postgresql)
-  - [3. Setting Up PostgreSQL Database](#3-setting-up-postgresql-database)
-- [Running the Application](#running-the-application)
-- [License](#license)
+This project demonstrates an **intelligent, self-adaptive Kubernetes deployment platform** that enables **progressive delivery using canary strategies**, combined with **real-time metrics evaluation and automated rollback**.
 
-## Prerequisites
+It represents the final evolution of the platform, where deployments are no longer just automated—but **decision-driven based on system health**.
 
-Before setting up the project, ensure you have the following installed on your machine:
+---
 
-- Ubuntu (or another compatible Linux distribution)
-- Python 3.12 or higher
-- PostgreSQL
+## 🎯 Objectives  
 
-## Installation
+- Enable **progressive (canary) deployments**  
+- Introduce **metrics-driven deployment decisions**  
+- Automate **rollback on failure conditions**  
+- Integrate **traffic control with deployment strategy**  
+- Build a **feedback-driven system**  
+- Reduce deployment risk in production  
 
-### 1. Setting Up Python Virtual Environment
+---
 
-1. **Install the Python 3.12 virtual environment package:**
+## 🏗️ Architecture  
 
-   ```bash
-   sudo apt install python3.12-venv -y
-   ```
+The system is structured to combine **deployment control, traffic management, and observability into a closed-loop system**:
 
-2. **Create a virtual environment:**
+---
 
-   ```bash
-   python3 -m venv myenv
-   ```
+### 🔹 CI Layer (Build & Artifact Generation)
 
-3. **Activate the virtual environment:**
+- CI pipeline builds application  
+- Docker image is created and pushed  
 
-   ```bash
-   source myenv/bin/activate
-   ```
+👉 Produces **validated deployable artifacts**
 
-4. **Install required Python libraries from `requirements.txt`:**
+---
 
-   First, ensure `pip` is installed:
+### 🔹 CD Layer (GitOps + Progressive Delivery)
 
-   ```bash
-   sudo apt install python3-pip -y
-   ```
+- Argo CD manages application deployment  
+- Argo Rollouts manages deployment strategy  
 
-   Then, install the required libraries:
+👉 Separates:
+- **Deployment control (Argo CD)**  
+- **Release strategy (Argo Rollouts)**  
 
-   ```bash
-   pip3 install -r requirements.txt
-   ```
+---
 
-### 2. Installing PostgreSQL
+### 🔹 Deployment Strategy Layer (Canary Rollouts)
 
-To install and set up PostgreSQL, follow these steps:
+- Incremental rollout (e.g., 10% → 50% → 100%)  
+- Traffic gradually shifts to new version  
 
-1. **Install PostgreSQL and additional tools:**
+👉 Enables **controlled and safe releases**
 
-   ```bash
-   sudo apt-get install postgresql postgresql-contrib
-   ```
+---
 
-2. **Start the PostgreSQL service:**
+### 🔹 Traffic Layer (Gateway API)
 
-   ```bash
-   sudo systemctl start postgresql
-   ```
+- HTTPRoute manages traffic distribution  
+- Integrated with rollout strategy  
 
-3. **Enable PostgreSQL to start on boot:**
+👉 Ensures **traffic-aware deployment decisions**
 
-   ```bash
-   sudo systemctl enable postgresql
-   ```
+---
 
-### 3. Setting Up PostgreSQL Database
+### 🔹 Observability Layer  
 
-1. **Switch to the PostgreSQL user:**
+- Prometheus → metrics collection  
+- Grafana → dashboards  
+- Alertmanager → alerts  
 
-   ```bash
-   sudo -i -u postgres
-   ```
+👉 Provides **real-time feedback for deployment decisions**
 
-2. **Create a new PostgreSQL user:**
+---
 
-   ```sql
-   CREATE USER root WITH PASSWORD 'root';
-   ```
+### 🔹 Decision Layer (Automated Analysis)
 
-3. **Create a new PostgreSQL database:**
+- Metrics evaluated during rollout  
+- Success/failure conditions defined  
 
-   ```sql
-   CREATE DATABASE my_database;
-   ```
+👉 Enables:
+- Continue rollout  
+- Pause rollout  
+- Rollback deployment  
 
-4. **Grant all privileges on the database to the new user:**
+---
 
-   ```sql
-   GRANT ALL PRIVILEGES ON DATABASE my_database TO root;
-   ```
+## 🧭 Architecture Diagrams  
 
-5. **Connect to the new database:**
+### 🔹 CI Pipeline  
 
-   ```sql
-   \c my_database
-   ```
+![CI Architecture](./docs/ci-architecture.png)
 
-6. **Grant all privileges on the public schema to the user:**
+**Flow:**
+- Code pushed to repository  
+- CI pipeline builds and pushes image  
 
-   ```sql
-   GRANT ALL PRIVILEGES ON SCHEMA public TO root;
-   ```
+👉 Ensures **artifact readiness**
 
-7. **Grant create privileges on the database to the user:**
+---
 
-   ```sql
-   GRANT CREATE ON DATABASE my_database TO root;
-   ```
+### 🔹 CD / Progressive Delivery Flow  
 
-## Running the Application
+![CD Architecture](./docs/cd-architecture.png)
 
-Once the environment and database are set up, you can run the application with the following steps:
+**Flow:**
+- Argo CD syncs manifests  
+- Argo Rollouts begins canary deployment  
+- Traffic gradually shifts  
+- Metrics are evaluated  
+- System decides to proceed or rollback  
 
-1. **Ensure your virtual environment is activated:**
+👉 Enables **intelligent deployment flow**
 
-   ```bash
-   source myenv/bin/activate
-   ```
+---
 
-2. **Run the application:**
+> This architecture introduces a **closed-loop feedback system**, where deployment decisions are driven by real-time system behavior.
 
-   ```bash
-   python run.py
-   ```
+---
 
-   The application will start, and you can access it via the specified host and port in your configuration.
+## 📁 Repository Structure  
 
-## License
+---
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+### 🔹 Argo CD  
 
-=======
-# python-aks-platform
-This project is a production-ready Python Flask application designed to demonstrate a cloud-native deployment workflow on Azure Kubernetes Service (AKS).
->>>>>>> bc7c4fea993a4681f14eb4aa13060408743790d3
+`argocd/`
+
+- Application definitions  
+- GitOps configuration  
+
+---
+
+### 🔹 Rollouts  
+
+`rollouts/`
+
+- Canary deployment definitions  
+- Analysis templates  
+
+👉 Defines **deployment intelligence**
+
+---
+
+### 🔹 Kubernetes Manifests  
+
+`k8s/`
+
+- Application workloads  
+- Services and routing  
+
+---
+
+### 🔹 Monitoring  
+
+`monitoring/`
+
+- Prometheus  
+- Grafana  
+- Alertmanager  
+
+---
+
+## 🔁 System Flow  
+
+### Flow Explanation:
+
+1. Developer pushes code  
+2. CI pipeline builds and pushes image  
+3. Git manifests updated  
+4. Argo CD syncs cluster  
+5. Argo Rollouts starts canary deployment  
+6. Traffic gradually shifts to new version  
+7. Metrics are continuously evaluated  
+8. System decides:
+   - Continue rollout  
+   - Pause rollout  
+   - Rollback deployment  
+9. Deployment completes or reverts  
+
+---
+
+## 🎛️ Control Model  
+
+| Layer | Responsibility |
+|------|---------------|
+| **Git** | Source of truth |
+| **CI Pipeline** | Artifact validation |
+| **Argo CD** | Deployment control |
+| **Argo Rollouts** | Progressive delivery |
+| **Gateway API** | Traffic routing |
+| **Prometheus** | Metrics collection |
+| **Analysis Engine** | Decision making |
+
+---
+
+## ⚙️ Runtime Behavior  
+
+---
+
+### 🔹 Deployment Behavior  
+
+- Canary rollout begins with small traffic percentage  
+- Traffic increases gradually  
+- Full rollout only after validation  
+
+👉 Ensures **safe and controlled deployment**
+
+---
+
+### 🔹 Decision Behavior  
+
+- Metrics evaluated at each step  
+- If thresholds pass → continue  
+- If thresholds fail → rollback  
+
+👉 Enables **intelligent decision-making**
+
+---
+
+### 🔹 Failure Handling  
+
+- Automatic rollback triggered on failure  
+- System returns to previous stable state  
+
+👉 Ensures **self-protection**
+
+---
+
+### 🔹 Traffic Behavior  
+
+- Traffic routed based on rollout stage  
+- Gradual shift to new version  
+
+👉 Ensures **smooth transition**
+
+---
+
+### 🔹 Observability Behavior  
+
+- Metrics collected continuously  
+- Alerts triggered on anomalies  
+- Dashboards provide visibility  
+
+👉 Enables **real-time insight**
+
+---
+
+### 🔹 Scaling Behavior  
+
+- HPA scales based on load  
+- Works alongside rollout strategy  
+
+👉 Ensures **availability under load**
+
+---
+
+## 📊 Observability  
+
+- Prometheus → metrics  
+- Grafana → dashboards  
+- Alertmanager → alerts  
+
+Enables:
+- Deployment validation  
+- Performance monitoring  
+- Failure detection  
+
+---
+
+## ⚖️ Design Trade-offs & Future Enhancements  
+
+- Canary deployments increase complexity  
+- Metrics-based decisions require accurate thresholds  
+- Rollout delays may increase deployment time  
+
+Future improvements:
+
+- Add A/B testing strategies  
+- Integrate ML-based anomaly detection  
+- Multi-cluster progressive deployments  
+- Policy enforcement (OPA/Gatekeeper)  
+
+---
+
+## 💬 Summary  
+
+This project introduces **intelligent deployment capabilities**, where the system uses **real-time metrics to decide the success or failure of a release**.
+
+It demonstrates how **progressive delivery, observability, and automation** can be combined to create a **self-adaptive and resilient platform**.
+
+> The system is designed using a **Solution → Control → Behavior model**, enabling intelligent, safe, and automated deployments.
